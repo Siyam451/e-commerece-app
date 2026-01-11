@@ -1,0 +1,43 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for German (`de`).
+class AppLocalizationsDe extends AppLocalizations {
+  AppLocalizationsDe([String locale = 'de']) : super(locale);
+
+  @override
+  String get hello => 'Hallo';
+
+  @override
+  String get changelanguage => 'ändern Sprache';
+
+  @override
+  String get completeProfile => 'Complete Profile';
+
+  @override
+  String get profilemassage => 'Get started with us with your details';
+
+  @override
+  String get signupbutton => 'Register';
+
+  @override
+  String get gotoemailscreen => 'Login';
+
+  @override
+  String get allcategories => 'All Categories';
+
+  @override
+  String get computers => 'Computers';
+
+  @override
+  String get reviews => 'reviews';
+
+  @override
+  String get description => 'If You Have Any problem or find any good things in Our App then give a review it will motivate and help us,Thank You ';
+
+  @override
+  String get reviewbyuser => 'I\'ve had a few massages in my time, but never one quite like this. My therapist, Sarah, was amazing and really tailored the experience to what I needed. You really get the sense that your problems and specific pains are being addressed rather than just being generally rubbed around. The room was nicely decorated with gentle music in the background, creating a great ambiance. The massage itself was very flowing and unique; she covered large areas of my body (back and legs) at the same time and paid extra attention to my hip that was bothering me. I was so relaxed afterwards, I felt a world away from the bustling city outside. I will definitely be back!';
+}
