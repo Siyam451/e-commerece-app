@@ -1,6 +1,5 @@
 import 'package:ecommerce_project/app/features/cartList/presentation/screens/cart_list_screen.dart';
 import 'package:ecommerce_project/app/features/common/presentation/widgets/center_circular_inprogress.dart';
-import 'package:ecommerce_project/app/features/product/data/models/product_details_model.dart';
 import 'package:ecommerce_project/app/features/product/presentation/screens/product_review_screen.dart';
 import 'package:ecommerce_project/app/features/product/providers/product_details_provider.dart';
 import 'package:ecommerce_project/l10n/app_localizations.dart';
@@ -63,7 +62,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           children: [
                             Text(_productDetailsProvider.productdetailmodel?.title ?? "",style: textTheme.bodyLarge,),
 
-                            IncDecButton(onChange: (int newvalue) {},),
+                            IncDecButton(
+                              maxvalue: _productDetailsProvider.productdetailmodel?.quantity ?? 20, // amder joto ta takbe api te toto ta jate nite pari
+                              onChange:
+                                (int newvalue) {
+
+                            },),
                           ],
                         ),
 
@@ -84,13 +88,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             FavouriteButton(),
                           ],
                         ),
+                        if(_productDetailsProvider.productdetailmodel?.colors.isNotEmpty ?? false)
 
                         Text('Colors',style: textTheme.bodyLarge,),
+
                         ColorPicker(colors: _productDetailsProvider.productdetailmodel?.colors ?? [], onChange: (selectedcolor){}),
 
                         SizedBox(height: 6,),
+                        if(_productDetailsProvider.productdetailmodel?.sizes.isNotEmpty ?? false) //jdi size ba colour na thake taile aita show korbe na
 
                         Text('Sizes',style: textTheme.bodyLarge,),
+
                         ColorPicker(colors:_productDetailsProvider.productdetailmodel?.sizes ?? [] , onChange: (selectedsize){}),
                         SizedBox(height: 6,),
 
