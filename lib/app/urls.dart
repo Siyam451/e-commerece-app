@@ -10,4 +10,7 @@ class Urls {
     "$_baseUrl/products?count=$pagesize&page=$pageNo&category=$categoryId";
 
   static String ProductDetails(String productId) =>'$_baseUrl/products/id/$productId';
+
+  static const String addtoCartUrl = '$_baseUrl/cart';
+  static  String CartListUrl(int? count) => '$_baseUrl/cart?count=$count';
 }

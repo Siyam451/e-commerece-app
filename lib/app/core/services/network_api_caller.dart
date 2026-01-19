@@ -4,10 +4,7 @@ import 'dart:ui';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
-
-part '../models/network_response.dart'; //aitar ekta part j ar ekta file e ase ta bujhano hoiche
-
-
+part '../models/network_response.dart';
 
 class NetworkCaller {
   final Logger _logger = Logger();
@@ -36,7 +33,7 @@ class NetworkCaller {
           responseData: decodedData,
         );
       } else if (statusCode == 401) {
-        onUnauthorize(); //jdi unautorize kichu ashe taile amra aikan theke handle korbo
+        onUnauthorize();
         return NetworkResponse(
           isSuccess: false,
           responseCode: statusCode,
@@ -50,7 +47,7 @@ class NetworkCaller {
           isSuccess: false,
           responseCode: statusCode,
           responseData: decodedData,
-          errorMessage: decodedData['msg'],
+          errorMessage: decodedData['msg'], // TODO: Propose a solution to make this component independent
         );
       }
     } on Exception catch (e) {
@@ -73,8 +70,7 @@ class NetworkCaller {
       _logRequest(url, body: body);
       Response response = await post(
         uri,
-        headers: headers  //ja token ba header takbe ta amra add korle hoi jabe
-            ?? {'content-type': 'application/json'},
+        headers: headers ?? {'content-type': 'application/json'},
         body: jsonEncode(body),
       );
       _logResponse(url, response);
@@ -104,7 +100,7 @@ class NetworkCaller {
           isSuccess: false,
           responseCode: statusCode,
           responseData: decodedData,
-          errorMessage: decodedData['data'],
+          errorMessage: decodedData['msg'],
         );
       }
     } on Exception catch (e) {

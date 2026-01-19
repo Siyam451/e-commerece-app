@@ -2,9 +2,10 @@ import 'package:ecommerce_project/app/app_color.dart';
 import 'package:flutter/material.dart';
 
 class IncDecButton extends StatefulWidget {
-  const IncDecButton({super.key, required this.onChange,  this.maxvalue = 100});
+  const IncDecButton({super.key, required this.onChange,  this.maxvalue = 100,  this.initialValue});
   final Function(int)  onChange;
   final int maxvalue;
+  final int? initialValue;
 
   @override
   State<IncDecButton> createState() => _IncDecButtonState();

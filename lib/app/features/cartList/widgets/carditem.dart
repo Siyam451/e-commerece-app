@@ -1,3 +1,4 @@
+import 'package:ecommerce_project/app/features/cartList/data/models/cart_list_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app_color.dart';
@@ -6,10 +7,11 @@ import 'inc_dec_button.dart';
 class CardItem extends StatelessWidget {
   const CardItem({
     super.key,
-    required this.textTheme,
+    required this.textTheme, required this.cartItem,
   });
 
   final TextTheme textTheme;
+  final CartItem cartItem;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,15 @@ class CardItem extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset(AssetPaths.logoPNG,height: 70,width: 90,),
+            child: cartItem.image != null ? Image.network(
+              cartItem.image!,
+              height: 70,
+              width: 90,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return _imageErrorWidget();
+              },
+            ) : _imageErrorWidget(),
           ),
           Expanded(
             child: Padding(
@@ -35,7 +45,7 @@ class CardItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('New year Nike Shoe',
+                            Text(cartItem.title,
                                 maxLines: 1,
                                 style: textTheme.bodyLarge?.copyWith(overflow: TextOverflow.ellipsis)),
                             Text(
@@ -57,13 +67,19 @@ class CardItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('1000TAKA',style: textTheme.bodyMedium?.copyWith(
+                      Text('${cartItem.price * cartItem.quantity}TAKA',style: textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.themeColor)
                       ),
 
 
-                      IncDecButton(onChange: (int value) {},),
+                      IgnorePointer(
+                        child: IncDecButton(
+                          initialValue: cartItem.quantity,
+                          onChange: (_) {},
+                        ),
+                      ),
+
 
 
 
@@ -79,4 +95,17 @@ class CardItem extends StatelessWidget {
       ),
     );
   }
+  Widget _imageErrorWidget() {
+    return Container(
+      height: 70,
+      width: 90,
+      color: Colors.grey.shade200,
+      child: const Icon(
+        Icons.image_not_supported,
+        color: Colors.grey,
+        size: 30,
+      ),
+    );
+  }
+
 }

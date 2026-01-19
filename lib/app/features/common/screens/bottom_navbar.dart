@@ -1,63 +1,81 @@
-import 'package:ecommerce_project/app/app_color.dart';
-import 'package:ecommerce_project/app/features/categories/presentation/categorieslist_screen.dart';
-import 'package:ecommerce_project/app/features/categories/provider/category_list_provider.dart';
-import 'package:ecommerce_project/app/features/home/presentation/home_screen.dart';
-import 'package:ecommerce_project/app/features/home/providers/home_slider_provider.dart';
+
+import 'package:ecommerce_project/app/features/common/provider/bottom_navbar_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app_color.dart';
+import '../../auth/presentation/providers/auth_controller.dart';
+import '../../auth/presentation/screens/sign_up_screen.dart';
 import '../../cartList/presentation/screens/cart_list_screen.dart';
+import '../../categories/presentation/categorieslist_screen.dart';
+import '../../categories/provider/category_list_provider.dart';
+import '../../home/presentation/home_screen.dart';
+import '../../home/providers/home_slider_provider.dart';
 import '../../wish-list/presentation/screens/wishList_screen.dart';
-import '../provider/bottom_navbar_provider.dart';
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({super.key});
-  static const name = '/bottomNavBar';
+
+  static const String name = '/main-bottom-nav-holder';
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-
-  final List<Widget> _screens =[
+  final List<Widget> _screens = [
     HomeScreen(),
     CategoriesListScreen(),
     CartListScreen(),
     WishlistScreen(),
-
   ];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<CategoryListProvider>().fetchCategoryList();
     context.read<HomeSliderProvider>().gethomeSlider();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BottomNavbarProvider>(
-      builder: (context,bottomnavbarprovider,_) {
+      builder: (context, bottomnavbarprovider, _) {
         return Scaffold(
           body: _screens[bottomnavbarprovider.selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             unselectedItemColor: Colors.grey,
             selectedItemColor: AppColors.themeColor,
             currentIndex: bottomnavbarprovider.selectedIndex,
-            onTap: bottomnavbarprovider.changeItem,//tap korle chnage item e ja kaj korchi ta show korbe
-            showSelectedLabels: true, // jeita select korbo seita special vabe dekhabe
+            onTap: (int index) async {
+              if (index == 2 || index == 3) {
+                if (await AuthController.IsUserAlreadyLoggedIn() == false) {
+                  Navigator.pushNamed(context, SignUpScreen.name);
+                  return;
+                }
+              }
+
+              bottomnavbarprovider.changeItem(index);
+            },
+            showUnselectedLabels: true,
             items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home),label: 'home'),
-              BottomNavigationBarItem(icon: Icon(Icons.dashboard_customize),label: 'Catagories'),
-              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart),label: 'Shopping craft'),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'WishList'),
-
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard_customize),
+                label: 'Categories',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Carts',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_outline_rounded),
+                label: 'Wishlist',
+              ),
             ],
-
           ),
         );
-      }
+      },
     );
   }
 }

@@ -36,7 +36,8 @@ class AppRoutes {
       final productId =settings.arguments as String;
       widget =  ProductDetailsScreen(productId: productId,);
     }else if (settings.name == CartListScreen.name) {
-      widget = const CartListScreen();
+      final count =settings.arguments as int;
+      widget = CartListScreen(count: count,);
     }else if (settings.name == ProductReviewScreen.name) {
       widget = const ProductReviewScreen();
     }else if (settings.name == AddProductReviewScreen.name) {

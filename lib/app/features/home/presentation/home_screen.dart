@@ -1,4 +1,7 @@
 import 'package:ecommerce_project/app/assets_paths.dart';
+import 'package:ecommerce_project/app/features/auth/presentation/providers/auth_controller.dart';
+import 'package:ecommerce_project/app/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:ecommerce_project/app/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:ecommerce_project/app/features/categories/models/category_model.dart';
 import 'package:ecommerce_project/app/features/categories/provider/category_list_provider.dart';
 import 'package:ecommerce_project/app/features/common/presentation/widgets/center_circular_inprogress.dart';
@@ -130,47 +133,55 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategories() {
     return Column(
-              children: [
-                SizedBox(
-                  height: 120,
-                  child: Consumer<CategoryListProvider>(
-                    builder: (context,categoryListProvider,_) {
-                      if(categoryListProvider.initloading){
-                        return CenterCircularProgress();
-                      }
-                      return ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: categoryListProvider.categorylist.length > 10
-                              ? 10 : categoryListProvider.categorylist.length, //home screen e category list er shudu 10 ta dekhabe
-                          itemBuilder: (context, index) {
-                             return CategoryCard(categoryModel: categoryListProvider.categorylist[index],);
-                          },
-                        separatorBuilder: (context,index)=>SizedBox(width: 5,),
-                          );
-                    }
-                  ),
-                ),
-              ],
-            );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-
-      title: SvgPicture.asset(AssetPaths.logoNavSvg),
-      actions: [
-
-
-        CircleIconButton(icon: Icons.person, onTap: () {},),
-        SizedBox(height: 8,),
-        CircleIconButton(icon: Icons.call, onTap: () {},),
-        SizedBox(height: 8,),
-        CircleIconButton(icon: Icons.notifications_active, onTap: () {},),
-        SizedBox(height: 4,),
-
+      children: [
+        SizedBox(
+          height: 120,
+          child: Consumer<CategoryListProvider>(
+              builder: (context,categoryListProvider,_) {
+                if(categoryListProvider.initloading){
+                  return CenterCircularProgress();
+                }
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoryListProvider.categorylist.length > 10
+                      ? 10 : categoryListProvider.categorylist.length, //home screen e category list er shudu 10 ta dekhabe
+                  itemBuilder: (context, index) {
+                    return CategoryCard(categoryModel: categoryListProvider.categorylist[index],);
+                  },
+                  separatorBuilder: (context,index)=>SizedBox(width: 5,),
+                );
+              }
+          ),
+        ),
       ],
     );
   }
+
+
+  AppBar buildAppBar() {
+    return AppBar(
+      title: SvgPicture.asset(AssetPaths.logoNavSvg),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () async {
+            await AuthController.clearData(); // remove token
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              SignInScreen.name,
+                  (route) => false,
+            );
+          },
+        ),
+
+        CircleIconButton(icon: Icons.person, onTap: () {}),
+        CircleIconButton(icon: Icons.call, onTap: () {}),
+        CircleIconButton(icon: Icons.notifications_active, onTap: () {}),
+        const SizedBox(width: 8),
+      ],
+    );
+  }
+
 
 }
 
