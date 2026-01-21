@@ -14,6 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
+import 'features/cartList/providers/cart_list_delete_provider.dart';
 
 class CraftyApp extends StatefulWidget {
   const CraftyApp({super.key});
@@ -35,7 +36,8 @@ class _CraftyAppState extends State<CraftyApp> {
         ChangeNotifierProvider(create: (_)=> CategoryListProvider()),
         ChangeNotifierProvider(create: (_)=> HomeSliderProvider()),
         ChangeNotifierProvider(create: (_)=> AuthProvider()),
-        ChangeNotifierProvider(create: (_)=> CartListProvider())
+        ChangeNotifierProvider(create: (_)=> CartListProvider()),
+        ChangeNotifierProvider(create: (_) => CartListDeleteProvider()),
       ],
       child: Consumer<LanguageProvider>(
         builder: (context,languageProvider,child) {

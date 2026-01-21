@@ -13,4 +13,13 @@ class Urls {
 
   static const String addtoCartUrl = '$_baseUrl/cart';
   static  String CartListUrl(int? count) => '$_baseUrl/cart?count=$count';
+
+  static String cartListDeleteUrl(String cartItemId) {
+    return '$_baseUrl/cart/$cartItemId';
+  }
+  static const String createProductReviewUrl = '$_baseUrl/review';
+  static String ProductReviewUrl(int count,String productId) =>
+      "$_baseUrl/reviews?count=$count&product=$productId";
+
+
 }

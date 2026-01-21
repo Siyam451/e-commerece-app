@@ -1,13 +1,15 @@
+import 'package:ecommerce_project/app/features/cartList/providers/cart_list_delete_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app_color.dart';
 import '../../../common/presentation/widgets/center_circular_inprogress.dart';
+
 import '../../../common/provider/bottom_navbar_provider.dart';
 import '../../providers/cart_list_provider.dart';
 import '../../widgets/carditem.dart';
 class CartListScreen extends StatefulWidget {
-  const CartListScreen({super.key, this.count});
+  const CartListScreen({super.key, this.count, });
   static const name = '/CartListScreen';
   final int? count;
 
@@ -29,6 +31,8 @@ class _CartListScreenState extends State<CartListScreen> {
 
 
    // CartListProvider _cartListProvider = CartListProvider();
+  CartListDeleteProvider _cartListDeleteProvider = CartListDeleteProvider();
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,7 @@ class _CartListScreenState extends State<CartListScreen> {
                     final item = cartlistprovider.cartItem[index];
                     return CardItem(
                       textTheme: textTheme,
-                      cartItem: item,
+                      cartItem: item, refreshParent: () {  },
                     );
                   },
                 ),
@@ -111,4 +115,11 @@ class _CartListScreenState extends State<CartListScreen> {
       ),
     );
   }
+
+
+
+
+
+
+
 }

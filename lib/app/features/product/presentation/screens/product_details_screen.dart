@@ -20,7 +20,7 @@ import '../../widgets/color_picker.dart';
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});
   static const name = '/ProductDetails';
-   final String productId;
+  final String productId;
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -41,14 +41,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
     return Scaffold(
-        appBar:AppBar(title: Text('Product Details'),
-        ),
-        body: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_)=> _productDetailsProvider),
-             ChangeNotifierProvider(create: (_)=> _addToCartProvider),
-          ],
-          child: Consumer<ProductDetailsProvider>(
+      appBar:AppBar(title: Text('Product Details'),
+      ),
+      body: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_)=> _productDetailsProvider),
+          ChangeNotifierProvider(create: (_)=> _addToCartProvider),
+        ],
+        child: Consumer<ProductDetailsProvider>(
             builder: (context,_,_) {
               if(_productDetailsProvider.ProductDetailsInprogress){
                 return CenterCircularProgress();
@@ -74,9 +74,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               IncDecButton(
                                 maxvalue: _productDetailsProvider.productdetailmodel?.quantity ?? 20, // amder joto ta takbe api te toto ta jate nite pari
                                 onChange:
-                                  (int newvalue) {
+                                    (int newvalue) {
 
-                              },),
+                                },),
                             ],
                           ),
 
@@ -90,7 +90,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               SizedBox(width: 8),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, ProductReviewScreen.name);
+                                  Navigator.pushNamed(context, ProductReviewScreen.name,arguments: widget.productId);
                                 },
                                 child: Text(AppLocalizations.of(context)!.reviews),
                               ),
@@ -99,14 +99,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           if(_productDetailsProvider.productdetailmodel?.colors.isNotEmpty ?? false)
 
-                          Text('Colors',style: textTheme.bodyLarge,),
+                            Text('Colors',style: textTheme.bodyLarge,),
 
                           ColorPicker(colors: _productDetailsProvider.productdetailmodel?.colors ?? [], onChange: (selectedcolor){}),
 
                           SizedBox(height: 6,),
                           if(_productDetailsProvider.productdetailmodel?.sizes.isNotEmpty ?? false) //jdi size ba colour na thake taile aita show korbe na
 
-                          Text('Sizes',style: textTheme.bodyLarge,),
+                            Text('Sizes',style: textTheme.bodyLarge,),
 
                           ColorPicker(colors:_productDetailsProvider.productdetailmodel?.sizes ?? [] , onChange: (selectedsize){}),
                           SizedBox(height: 6,),
@@ -139,33 +139,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           Column(
 
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Price',style: textTheme.bodyMedium,),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Price',style: textTheme.bodyMedium,),
 
-                                Text('${_productDetailsProvider.productdetailmodel?.price ?? ''}',style: textTheme.titleMedium?.copyWith(color: AppColors.themeColor)),
+                              Text('${_productDetailsProvider.productdetailmodel?.price ?? ''}',style: textTheme.titleMedium?.copyWith(color: AppColors.themeColor)),
 
-                              ],
-                            ),
-
-
+                            ],
+                          ),
 
 
 
-                              SizedBox(
-                                width: 120,
-                                child: Consumer<AddToCartProvider>(
-                                  builder: (context,addtocartprovider,_) {
-                                    if(addtocartprovider.addtocartinprogress){
-                                      return CenterCircularProgress();
-                                    }
-                                    return FilledButton(
-                                        onPressed: _AddtoCartButton,
-                                     child: Text('Add to Cart')
-                                    );
+
+
+                          SizedBox(
+                            width: 120,
+                            child: Consumer<AddToCartProvider>(
+                                builder: (context,addtocartprovider,_) {
+                                  if(addtocartprovider.addtocartinprogress){
+                                    return CenterCircularProgress();
                                   }
-                                ),
-                              )
+                                  return FilledButton(
+                                      onPressed: _AddtoCartButton,
+                                      child: Text('Add to Cart')
+                                  );
+                                }
+                            ),
+                          )
 
                         ],
                       ),
@@ -175,8 +175,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ],
               );
             }
-          ),
         ),
+      ),
 
 
     );

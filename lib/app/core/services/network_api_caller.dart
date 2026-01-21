@@ -127,4 +127,54 @@ class NetworkCaller {
           'Body: ${response.body}',
     );
   }
+
+//for delete
+  Future<NetworkResponse> deleteRequest({required String url}) async {
+    try {
+      Uri uri = Uri.parse(url);
+
+      _logRequest(url);
+      Response response = await delete(uri, headers: headers);
+      _logResponse(url, response);
+
+      final int statusCode = response.statusCode;
+
+      if (statusCode == 200 || statusCode == 204) {
+        // SUCCESS
+        final decodedData =
+        response.body.isNotEmpty ? jsonDecode(response.body) : null;
+
+        return NetworkResponse(
+          isSuccess: true,
+          responseCode: statusCode,
+          responseData: decodedData,
+        );
+      } else if (statusCode == 401) {
+        onUnauthorize();
+        return NetworkResponse(
+          isSuccess: false,
+          responseCode: statusCode,
+          errorMessage: 'Un-authorize',
+          responseData: null,
+        );
+      } else {
+        // FAILED
+        final decodedData = jsonDecode(response.body);
+        return NetworkResponse(
+          isSuccess: false,
+          responseCode: statusCode,
+          responseData: decodedData,
+          errorMessage: decodedData['msg'],
+        );
+      }
+    } on Exception catch (e) {
+      return NetworkResponse(
+        isSuccess: false,
+        responseCode: -1,
+        responseData: null,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
 }
