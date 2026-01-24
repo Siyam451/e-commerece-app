@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/services/network_api_caller.dart';
 import '../../../set_up_network_caller.dart';
 import '../../../urls.dart';
 import '../data/models/product_review_model.dart';

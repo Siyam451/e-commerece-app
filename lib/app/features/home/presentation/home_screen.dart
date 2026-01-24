@@ -96,12 +96,15 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildCategories(),
 
               SelectionHeader(title: 'Popular', onTap: (){
+                context.read<BottomNavbarProvider>().ChangeToCategories(); // porer screen e jabe
               }),
 
               _buildPopularList(),
 
 
-              SelectionHeader(title: 'Special', onTap: (){}),
+              SelectionHeader(title: 'Special', onTap: (){
+                context.read<BottomNavbarProvider>().ChangeToCategories(); // porer screen e jabe
+              }),
 
               _buildPopularList(),
 
@@ -122,12 +125,21 @@ class _HomeScreenState extends State<HomeScreen> {
   SizedBox _buildPopularList() {
     return SizedBox(
               height: 170,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context,index){
-                // return ProductCard();
-              }),
+              child: Consumer<CategoryListProvider>(
+                builder: (context,categoryListProvider,_) {
+                  if(categoryListProvider.initloading){
+                    return CenterCircularProgress();
+                  }
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                      itemCount: categoryListProvider.categorylist.length > 7
+                          ? 7 : categoryListProvider.categorylist.length,
+                      itemBuilder: (context,index){
+                     // return ProductCard(productModel: null,);
+                        return CategoryCard(categoryModel: categoryListProvider.categorylist[index]);
+                  });
+                }
+              ),
             );
   }
 

@@ -5,6 +5,7 @@ import 'package:ecommerce_project/app/features/auth/presentation/screens/sign_up
 import 'package:ecommerce_project/app/features/common/presentation/widgets/center_circular_inprogress.dart';
 import 'package:ecommerce_project/app/features/common/presentation/widgets/showsnacbar_masaage.dart';
 import 'package:ecommerce_project/app/features/common/provider/add_to_cart_provider.dart';
+import 'package:ecommerce_project/app/features/product/data/models/product_review_model.dart';
 import 'package:ecommerce_project/app/features/product/presentation/screens/product_review_screen.dart';
 import 'package:ecommerce_project/app/features/product/providers/product_details_provider.dart';
 import 'package:ecommerce_project/l10n/app_localizations.dart';
@@ -21,6 +22,7 @@ class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});
   static const name = '/ProductDetails';
   final String productId;
+
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
