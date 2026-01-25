@@ -1,5 +1,6 @@
 import 'package:ecommerce_project/app/features/auth/presentation/screens/otp-screen.dart';
 import 'package:ecommerce_project/app/features/cartList/presentation/screens/cart_list_screen.dart';
+import 'package:ecommerce_project/app/features/cartList/presentation/screens/payment_system_screen.dart';
 import 'package:ecommerce_project/app/features/categories/models/category_model.dart';
 import 'package:ecommerce_project/app/features/product/data/models/product_review_model.dart';
 
@@ -46,6 +47,8 @@ class AppRoutes {
     }else if (settings.name == AddProductReviewScreen.name) {
       final ProductId =settings.arguments as String;
       widget = AddProductReviewScreen(ProductId: ProductId,);
+    } else if (settings.name == PaymentMethodScreen.name) {
+      widget = const PaymentMethodScreen();
     }
     return MaterialPageRoute(
         builder: (context) => widget,

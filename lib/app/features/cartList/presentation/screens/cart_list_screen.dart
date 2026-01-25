@@ -1,3 +1,4 @@
+import 'package:ecommerce_project/app/features/cartList/presentation/screens/payment_system_screen.dart';
 import 'package:ecommerce_project/app/features/cartList/providers/cart_list_delete_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -101,7 +102,9 @@ class _CartListScreenState extends State<CartListScreen> {
                       SizedBox(
                         width: 120,
                         child: FilledButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, PaymentMethodScreen.name);
+                          },
                           child: const Text('CheckOut'),
                         ),
                       ),
