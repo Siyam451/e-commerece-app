@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../l10n/app_localizations.dart';
 import '../../../widgets/app_logo.dart';
+import '../providers/auth_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,11 +27,35 @@ class _SplashScreenState extends State<SplashScreen> {
     _movetoNextScreen();
   }
 
-  Future<void> _movetoNextScreen()async{
-    await Future.delayed(Duration(seconds: 3));
-  // Navigator.pushNamedAndRemoveUntil(context,BottomNavbar.name , (predicate)=> false);
-    Navigator.pushNamedAndRemoveUntil(context,BottomNavbar.name , (predicate)=> false);
+  // Future<void> _movetoNextScreen()async{
+  //   await Future.delayed(Duration(seconds: 3));
+  // // Navigator.pushNamedAndRemoveUntil(context,BottomNavbar.name , (predicate)=> false);
+  //   Navigator.pushNamedAndRemoveUntil(context,BottomNavbar.name , (predicate)=> false);
+  // }
+  Future<void> _movetoNextScreen() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    final bool isLoggedIn =
+    await AuthController.IsUserAlreadyLoggedIn();
+
+    if (!mounted) return;
+
+    if (isLoggedIn) {
+      await AuthController.getUserData(); // load token + user
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        BottomNavbar.name,
+            (route) => false,
+      );
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        SignUpScreen.name, // or LoginScreen
+            (route) => false,
+      );
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThememodeProvider>(context);

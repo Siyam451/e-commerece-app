@@ -30,7 +30,7 @@ class _CartListScreenState extends State<CartListScreen> {
   }
 
 
-   // CartListProvider _cartListProvider = CartListProvider();
+  // CartListProvider _cartListProvider = CartListProvider();
   CartListDeleteProvider _cartListDeleteProvider = CartListDeleteProvider();
 
 

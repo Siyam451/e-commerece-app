@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../app_color.dart';
 import '../../../common/presentation/widgets/center_circular_inprogress.dart';
 import '../../../common/provider/bottom_navbar_provider.dart';
+import '../../data/models/product_review_model.dart';
 import '../../providers/product_review_provider.dart';
 import 'add_product_review_screen.dart';
 
@@ -39,7 +40,7 @@ class _ProductReviewScreenState
     if (provider.loadingMoreData) return;
 
     if (_scrollController.position.extentAfter < 300) {
-      provider.getProductReview(widget.productId);
+      provider.fetchProductReviews(widget.productId);
     }
   }
 
@@ -59,7 +60,7 @@ class _ProductReviewScreenState
       },
       child: ChangeNotifierProvider(
         create: (_) => ProductReviewProvider()
-          ..loadInitialProductReview(widget.productId),
+          ..loadInitialProductReviews(widget.productId),
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -78,7 +79,7 @@ class _ProductReviewScreenState
                 return const CenterCircularProgress();
               }
 
-              if (provider.productReviewList.isEmpty) {
+              if (provider.reviewList.isEmpty) {
                 return const Center(
                   child: Text('No reviews yet'),
                 );
@@ -89,50 +90,38 @@ class _ProductReviewScreenState
                   Expanded(
                     child: ListView.builder(
                       controller: _scrollController,
-                      itemCount:
-                      provider.productReviewList.length +
-                          (provider.loadingMoreData
-                              ? 1
-                              : 0),
+                      itemCount: provider.reviewList.length +
+                          (provider.loadingMoreData ? 1 : 0),
                       itemBuilder: (context, index) {
                         if (index ==
-                            provider.productReviewList
-                                .length) {
+                            provider.reviewList.length) {
                           return const Padding(
                             padding: EdgeInsets.all(16),
-                            child:
-                            CenterCircularProgress(),
+                            child: CenterCircularProgress(),
                           );
                         }
 
                         final review =
-                        provider.productReviewList[
-                        index];
+                        provider.reviewList[index];
 
                         return Card(
                           child: Padding(
-                            padding:
-                            const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             child: Column(
                               crossAxisAlignment:
-                              CrossAxisAlignment
-                                  .start,
+                              CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(
-                                        Icons.person),
-                                    const SizedBox(
-                                        width: 4),
+                                    const Icon(Icons.person),
+                                    const SizedBox(width: 4),
                                     Text(
-                                      '${review.firstname} ${review.lastname}',
-                                      style: textTheme
-                                          .titleMedium,
+                                      '${review.user.firstName} ${review.user.lastName}',
+                                      style: textTheme.titleMedium,
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                    height: 6),
+                                const SizedBox(height: 6),
                                 Text(review.comment),
                               ],
                             ),
@@ -142,53 +131,45 @@ class _ProductReviewScreenState
                     ),
                   ),
 
+                  /// Bottom Bar
                   Container(
                     height: 70,
-                    padding:
-                    const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.themeColor
-                          .withAlpha(40),
-                      borderRadius:
-                      const BorderRadius.only(
-                        topLeft:
-                        Radius.circular(6),
-                        topRight:
-                        Radius.circular(6),
+                      color:
+                      AppColors.themeColor.withAlpha(40),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment:
-                      MainAxisAlignment
-                          .spaceBetween,
+                      MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Reviews (${provider.productReviewList.length})',
-                          style: textTheme
-                              .titleMedium
-                              ?.copyWith(
-                              color:
-                              Colors.white),
+                          'Reviews (${provider.reviewList.length})',
+                          style: textTheme.titleMedium
+                              ?.copyWith(color: Colors.white),
                         ),
                         FloatingActionButton(
                           onPressed: () async {
+                            final newReview =
                             await Navigator.pushNamed(
                               context,
-                              AddProductReviewScreen
-                                  .name,
-                              arguments:
-                              widget.productId,
+                              AddProductReviewScreen.name,
+                              arguments: widget.productId,
                             );
 
-                            provider
-                                .loadInitialProductReview(
-                              widget.productId,
-                            );
+                            if (newReview != null && mounted) {
+                              provider.addNewReview(
+                                newReview as ProductReviewModel,
+                              );
+                            }
                           },
                           child: Icon(
                             Icons.add,
-                            color: AppColors
-                                .themeColor,
+                            color: AppColors.themeColor,
                           ),
                         ),
                       ],

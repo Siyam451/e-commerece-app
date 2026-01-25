@@ -23,12 +23,27 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  final List<Widget> _screens = [
-    HomeScreen(),
-    CategoriesListScreen(),
-    CartListScreen(),
-    WishlistScreen(),
-  ];
+  // final List<Widget> _screens = [
+  //   HomeScreen(),
+  //   CategoriesListScreen(),
+  //   CartListScreen(),
+  //   WishlistScreen(),
+  // ];
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 0:
+        return HomeScreen();
+      case 1:
+        return CategoriesListScreen();
+      case 2:
+        return CartListScreen();
+      case 3:
+        return WishlistScreen();
+      default:
+        return HomeScreen();
+    }
+  }
+
 
   @override
   void initState() {
@@ -42,14 +57,16 @@ class _BottomNavbarState extends State<BottomNavbar> {
     return Consumer<BottomNavbarProvider>(
       builder: (context, bottomnavbarprovider, _) {
         return Scaffold(
-          body: _screens[bottomnavbarprovider.selectedIndex],
+          body: _getScreen(bottomnavbarprovider.selectedIndex),
+
           bottomNavigationBar: BottomNavigationBar(
             unselectedItemColor: Colors.grey,
             selectedItemColor: AppColors.themeColor,
             currentIndex: bottomnavbarprovider.selectedIndex,
             onTap: (int index) async {
               if (index == 2 || index == 3) {
-                if (await AuthController.IsUserAlreadyLoggedIn() == false) {
+                final isLoggedIn = await AuthController.IsUserAlreadyLoggedIn();
+                if (!isLoggedIn) {
                   Navigator.pushNamed(context, SignUpScreen.name);
                   return;
                 }
@@ -57,6 +74,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
               bottomnavbarprovider.changeItem(index);
             },
+
             showUnselectedLabels: true,
             items: [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
