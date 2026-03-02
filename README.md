@@ -1,24 +1,18 @@
 # ecommerce_project
 
-## 🚀 Features
+## 🚀 Key Features
 
-### 🔐 User Authentication
-Secure login and registration system with protected routes to ensure user data safety.
+- 🔐 Secure authentication system (Login & Registration)
+- 🛍️ Dynamic product listing via REST APIs
+- 🔄 Efficient state management using Provider pattern
+- 📱 Fully responsive UI (Mobile, Tablet & Desktop)
+- 🌙 Dark / Light mode toggle
+- 🌍 Multi-language translation support
+- ⚡ Optimized performance with smooth state updates
 
-### 🛒 E-Commerce Functionality
-Browse products, view details, and manage shopping experience seamlessly.
+  ## 🛠️ Tech Stack
 
-### 🔄 State Management
-Efficient state handling using Provider and setState for smooth UI updates.
-
-### 🌐 REST API Integration
-Dynamic product data fetched from REST APIs for real-time updates.
-
-### 📱 Responsive Design
-Fully responsive layout optimized for mobile, tablet, and desktop devices.
-
-### 🌙 Dark Mode Support
-Toggle between light and dark themes for better user experience.
-
-### 🌍 Multi-Language Support
-Integrated language translator to support multiple languages.
+- Flutter
+- Dart
+- REST API
+- Provider (State Management)
