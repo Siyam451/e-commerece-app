@@ -28,4 +28,4 @@
 ## 📱 Demo Video
 
 ▶️ Watch Demo:  
-https://drive.google.com/file/d/1nT0otzllrhXQD7_9o6NexuntHfXd24Kn/view
+[https://drive.google.com/file/d/1nT0otzllrhXQD7_9o6NexuntHfXd24Kn/view](https://drive.google.com/file/d/1b3Od6b4TZCHJhLoDLA5J7vV9nIfwWScw/view?usp=drive_link)
