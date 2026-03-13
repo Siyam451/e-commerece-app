@@ -25,7 +25,7 @@
 <img width="150" height="160" alt="image" src="https://github.com/user-attachments/assets/14c8c8ed-ff78-43ae-b3c3-7dc34c0497e7" />
 <img width="150" height="160" alt="image" src="https://github.com/user-attachments/assets/c3d8f268-325e-426d-8563-383fbf9aa82f" />
 
-## 📱 Demo Video
+## 🎥 Demo Video
 
-▶️ Watch Demo:  
-https://drive.google.com/file/d/1-f0oIRWBS9AwYRwr8OeUOPxPKNOC4hEC/view?usp=sharing
+Watch the demo here:  
+https://drive.google.com/file/d/11F9aEW62pJeWqdKtqUjCR-iwv-bjiUh5/view
